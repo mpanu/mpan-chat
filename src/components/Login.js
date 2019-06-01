@@ -9,3 +9,5 @@ function Login(props) {
         </div>
     );
 }
+
+export default Login;
