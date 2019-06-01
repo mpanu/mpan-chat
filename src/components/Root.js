@@ -1,12 +1,32 @@
 import React from 'react';
 import Login from './Login';
 
-function Root(props) {
-    if (!props.username) {
-        return (
-            <Login/>
+class Root extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: ''
+        };
+    }
+
+    render() {
+        if (this.state.username === '') {
+            return (
+                <div>{this.state.username}
+                    <Login onSubmitUsername={this.setUsername}/>
+                </div>
+            );
+        } else return (
+            <div>
+                <p>Username found: {this.state.username} </p>
+            </div>
         );
-    } else return <p>Username found</p>
+    }
+
+    setUsername = (name) => {
+        this.setState({...this.state, username: name});
+    }
 }
 
 export default Root;
