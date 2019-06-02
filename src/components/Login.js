@@ -17,4 +17,5 @@ class Login extends React.Component {
         Login</button>
     </div>
 }
+
 export default Login;
