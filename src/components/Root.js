@@ -28,7 +28,7 @@ class Root extends React.Component {
     setUsername = (name) => {
         postData('http://localhost:3001', { username: name })
             .then(data => {
-                this.setState({ ...this.state, username: name });
+                this.setState({ ...this.state, ...data });
                 console.log(JSON.stringify(data));
             }) // JSON-string from `response.json()` call
             .catch(error => console.error(error));
