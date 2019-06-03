@@ -1,5 +1,6 @@
 import React from 'react';
-import Login from './Login';
+import '../index.css';
+import Input from './Input';
 import fetch from 'cross-fetch';
 
 class Root extends React.Component {
@@ -14,9 +15,9 @@ class Root extends React.Component {
     render() {
         if (this.state.username === '') {
             return (
-                <div>{this.state.username}
-                    <Login onSubmitUsername={this.setUsername} />
-                </div>
+                <Input className="login" 
+                       buttonText='Login' 
+                       onSubmitUsername={this.setUsername} />
             );
         } else return (
             <div>
