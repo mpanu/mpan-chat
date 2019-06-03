@@ -1,7 +1,8 @@
 import React from 'react';
 import '../index.css';
 import Input from './Input';
-import fetch from 'cross-fetch';
+import MessageList from './MessageList';
+import { postData } from '../utils.js';
 
 class Root extends React.Component {
 
@@ -21,7 +22,10 @@ class Root extends React.Component {
             );
         } else return (
             <div>
-                <p>Username found: {this.state.username} </p>
+                <MessageList messages={this.state.messages}/>
+                <Input className="message" 
+                        buttonText='Send' 
+                        onSubmitUsername={console.log('todo, msg send')} />
             </div>
         );
     }
@@ -29,30 +33,9 @@ class Root extends React.Component {
     setUsername = (name) => {
         postData('http://localhost:3001', { username: name })
             .then(data => {
-                this.setState({ ...this.state, ...data });
-                console.log(JSON.stringify(data));
-            }) // JSON-string from `response.json()` call
+                this.setState({ ...this.state, ...data });                
+            })
             .catch(error => console.error(error));
     }
 }
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-function postData(url = '', data = {}) {
-    // Default options are marked with *
-    return fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, cors, *same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json',
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrer: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
-        .then(response => response.json()); // parses JSON response into native Javascript objects 
-}
-
 export default Root;
