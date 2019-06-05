@@ -18,14 +18,14 @@ class Root extends React.Component {
       return (
         <Input className="login"
           buttonText='Login'
-          onSubmitUsername={this.doLogin} />
+          onSubmit={this.doLogin} />
       );
     } else return (
       <div>
         <MessageList messages={this.state.messages} />
         <Input className="message"
           buttonText='Send'
-          onSubmitUsername={console.log('todo, msg send')} />
+          onSubmit={this.sendMessage} />
       </div>
     );
   }
@@ -34,8 +34,22 @@ class Root extends React.Component {
     postData('http://localhost:3001', { username: name })
       .then(data => {
         this.setState({ ...this.state, ...data });
+        var exampleSocket = new WebSocket('ws://localhost:3001/ws');
+        exampleSocket.onopen = function (event) {
+          console.log('ws is open');
+          exampleSocket.send("Here's some text that the server is urgently awaiting!"); 
+        };
       })
       .catch(error => console.error(error));
   }
+
+  sendMessage = (msg) => {
+    postData('http://localhost:3001/msg', { message: msg })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(error => console.error(error));
+  }
+
 }
 export default Root;

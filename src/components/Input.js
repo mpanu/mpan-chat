@@ -13,7 +13,7 @@ class Input extends React.Component {
           this.setState({ text: e.target.value })} />
       <button
         onClick={() =>
-          this.props.onSubmitUsername(this.state.text)}>
+          this.props.onSubmit(this.state.text)}>
         {this.props.buttonText}</button>
     </div>
 }
