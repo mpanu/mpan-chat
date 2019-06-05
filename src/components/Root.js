@@ -32,23 +32,26 @@ class Root extends React.Component {
 
   doLogin = (name) => {
     postData('http://localhost:3001', { username: name })
-      .then(data => {
+      .then(data => { // receive old messages
         this.setState({ ...this.state, ...data });
-        var exampleSocket = new WebSocket('ws://localhost:3001/ws');
-        exampleSocket.onmessage = function (event) {
-          console.log(event.data);
-        }
+        this.connectWebsocket();
       })
       .catch(error => console.error(error));
   }
 
-  sendMessage = (msg) => {
-    postData('http://localhost:3001/msg', { message: msg })
-      .then(data => {
-        console.log(data)
-      })
-      .catch(error => console.error(error));
+  connectWebsocket() {
+    const ws = new WebSocket('ws://localhost:3001/ws');
+    // TODO send username to register at server
+    ws.onmessage = this.receiveMessage;
+  };
+
+  receiveMessage(event) {
+    console.log(event.data);
   }
+
+  sendMessage = (msg) => {
+    postData('http://localhost:3001/msg', { message: msg });
+  };
 
 }
 export default Root;

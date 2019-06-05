@@ -16,5 +16,5 @@ export function postData(url = '', data = {}) {
         referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
-        .then(response => response.json()); // parses JSON response into native Javascript objects 
+    .then(response => response.json()); // parses JSON response into native Javascript objects 
 }

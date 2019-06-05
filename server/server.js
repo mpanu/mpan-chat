@@ -20,7 +20,7 @@ let connects = [];
 // TODO index
 app.get('/', (req, res) => res.json({ username: "username" }));
 
-// http-post login
+// http-post receive login
 app.post('/', function (req, res) {
     var username = req.body.username;
     console.log("User name = " + username);
@@ -28,9 +28,10 @@ app.post('/', function (req, res) {
     res.end("yes");
 });
 
-// http-post message
+// http-post receive message
 app.post('/msg', function (req, res) {
     console.log(req.body);
+    res.send({status: 'OK'})
     res.end("yes");
 });
 
@@ -41,9 +42,11 @@ app.ws('/ws', function (ws, req) {
     // temporary fart sender
     connects.forEach(socket => {
         socket.send('pieru');
+        console.log(connects.length);
     });
 
     ws.on('message', function (msg) {
+        // TODO get username here to register client
         console.log('ws on' + msg);
         //put msg sending here
     });
