@@ -35,10 +35,9 @@ class Root extends React.Component {
       .then(data => {
         this.setState({ ...this.state, ...data });
         var exampleSocket = new WebSocket('ws://localhost:3001/ws');
-        exampleSocket.onopen = function (event) {
-          console.log('ws is open');
-          exampleSocket.send("Here's some text that the server is urgently awaiting!"); 
-        };
+        exampleSocket.onmessage = function (event) {
+          console.log(event.data);
+        }
       })
       .catch(error => console.error(error));
   }
