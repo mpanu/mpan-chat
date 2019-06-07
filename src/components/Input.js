@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Input extends React.Component {
   constructor(props) {
@@ -17,5 +18,11 @@ class Input extends React.Component {
         {this.props.buttonText}</button>
     </div>
 }
+
+Input.propTypes = {
+  className: PropTypes.string,
+  onSubmit: PropTypes.func,
+  buttonText: PropTypes.string
+};
 
 export default Input;

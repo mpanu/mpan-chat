@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function MessageListItem (props) {
   return (
@@ -8,4 +9,11 @@ function MessageListItem (props) {
     </li>
   );
 }
+
+MessageListItem.propTypes = {
+  date: PropTypes.string,
+  message: PropTypes.string,
+  username: PropTypes.string
+}
+
 export default MessageListItem;
