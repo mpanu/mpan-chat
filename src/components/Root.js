@@ -42,6 +42,14 @@ class Root extends React.Component {
   connectWebsocket() {
     const ws = new WebSocket('ws://localhost:3001/ws');
     // TODO send username to register at server
+    ws.onopen = () => {
+      const initMsg = {
+        type: 'init-ws',
+        username: this.state.username,
+        channel: 'lobby'
+      };
+      ws.send(JSON.stringify(initMsg));
+    };
     ws.onmessage = this.receiveMessage;
   };
 
