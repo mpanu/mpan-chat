@@ -1,4 +1,4 @@
-This project is a simple chat sever and client.
+This project is a simple chat sever and a client.
 It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -10,12 +10,12 @@ To create a production build of the UI.<br>
 
 In the server directory, you can run:
 
-### `node server`
+### `node server.js`
 
 To start the server.<br>
 
-Open [http://localhost:3001](http://localhost:3001) in the browser to access the server usin the production build UI.<br>
+Open [http://localhost:3001](http://localhost:3001) in the browser to use the production UI.<br>
 
 Alternatively you can run:
 ### `npm start`
-This stard the development UI.
+This stard the development UI. Note that the server needs to be started manually.
