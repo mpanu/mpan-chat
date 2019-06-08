@@ -8,6 +8,8 @@ app.use(bodyParser.json());
 // cross-site
 const cors = require('cors');
 app.use(cors());
+// server build-dir as static files
+app.use(express.static('../build'))
 
 const port = 3001;
 
@@ -17,14 +19,14 @@ let messages = [{ date: "12:23 1.2.2019", username: 'kari', text: 'kova ääni' 
 // the clients
 let connections = [];
 
-// TODO index
-app.get('/', (req, res) => res.json({ username: "username" }));
-
 // http-post receive login
 app.post('/', function (req, res) {
   var username = req.body.username;
   console.log("User name = " + username);
-  res.send({ username: username, success: true, messages: messages });
+  res.send({ 
+    username: username, 
+    channel: 'lobby',
+    messages: messages });
   res.end("yes");
 });
 

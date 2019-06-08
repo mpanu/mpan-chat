@@ -8,25 +8,25 @@ class Root extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      username: ''
-    };
+    this.state = 'login required';
   }
 
   render() {
-    if (this.state.username === '') {
+    if (this.state === 'login required') {
       return (
         <Input className="login"
           buttonText='Login'
           onSubmit={this.doLogin} />
       );
-    } else return (
-      <div>
-        <MessageList messages={this.state.messages} />
-        <Input className="message"
-          buttonText='Send'
-          onSubmit={this.sendMessage} />
-      </div>
+    } 
+    else 
+      return (
+        <div>
+          <MessageList messages={this.state.messages} />
+          <Input className="message"
+            buttonText='Send'
+            onSubmit={this.sendMessage} />
+        </div>
     );
   }
 
@@ -46,7 +46,7 @@ class Root extends React.Component {
       const initMsg = {
         type: 'init-ws',
         username: this.state.username,
-        channel: 'lobby'
+        channel: this.state.channel
       };
       ws.send(JSON.stringify(initMsg));
     };
