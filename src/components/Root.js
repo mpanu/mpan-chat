@@ -4,15 +4,17 @@ import Input from './Input';
 import MessageList from './MessageList';
 import { postData } from '../utils.js';
 
-class Root extends React.Component {
+const LOGIN_REQUIRED = 'login required';
 
+class Root extends React.Component {
   constructor(props) {
     super(props);
-    this.state = 'login required';
+    this.state = {wsStatus: LOGIN_REQUIRED};
+    this.receiveMessage=this.receiveMessage.bind(this);
   }
 
   render() {
-    if (this.state === 'login required') {
+    if (this.state.wsStatus === LOGIN_REQUIRED) {
       return (
         <Input className="login"
           buttonText='Login'
@@ -33,32 +35,41 @@ class Root extends React.Component {
   doLogin = (name) => {
     postData('http://localhost:3001', { username: name })
       .then(data => { // receive old messages
-        this.setState({ ...this.state, ...data });
+        this.setState({...data, wsStatus: 'CONNECTED'});
+        console.log('doLogin: ' + JSON.stringify(data));
         this.connectWebsocket();
       })
       .catch(error => console.error(error));
   }
 
   connectWebsocket() {
-    const ws = new WebSocket('ws://localhost:3001/ws');
-    // TODO send username to register at server
+    const ws = new WebSocket('ws://localhost:3001/ws');    
     ws.onopen = () => {
-      const initMsg = {
+      ws.send(JSON.stringify({
         type: 'init-ws',
         username: this.state.username,
         channel: this.state.channel
-      };
-      ws.send(JSON.stringify(initMsg));
+      }));
     };
     ws.onmessage = this.receiveMessage;
   };
 
-  receiveMessage(event) {
-    console.log(event.data);
+  receiveMessage(wsMsgEvent) {
+    console.log('receiveMessage old state: ' + JSON.stringify(this.state));
+    const newState = {...this.state};
+    newState.messages = [...this.state.messages, JSON.parse(wsMsgEvent.data)];   
+    console.log('receiveMessage: ' + JSON.stringify(newState));
+    this.setState(newState);
   }
 
-  sendMessage = (msg) => {
-    postData('http://localhost:3001/msg', { message: msg });
+  sendMessage = (input) => {
+    const msg = {
+      username: this.state.username,
+      channel: this.state.channel,
+      date: new Date(),
+      text: input,
+    };
+    postData('http://localhost:3001/msg', msg);
   };
 
 }

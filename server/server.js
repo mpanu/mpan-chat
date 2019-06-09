@@ -14,22 +14,22 @@ const store = require('./store.js');
 // serve build-dir as static files
 app.use(express.static('../build'))
 
-// http-post receive login
+// http-post receive login / send old messages
 app.post('/', function (req, res) {
   res.send({ 
-    username: req.body.username, 
+    username: req.body.username, // TODO validate user
     channel: store.defaultChannel,
-    messages: store.getMsg(store.defaultChannel) 
+    messages: store.getMessages(store.defaultChannel) 
   });
   res.end("yes");
 });
 
-// websocket init
+// websocket init / save connection
 app.ws('/ws', function (ws, req) {
   ws.on('message', function (msg) {
-    const msgObj = JSON.parse(msg);
-    if (msgObj.type === 'init-ws') {
-      store.saveConnection(ws, msgObj.username, msgObj.channel);      
+    const o = JSON.parse(msg);
+    if (o.type === 'init-ws') {
+      store.saveConnection(ws, o.username, o.channel);      
     } else {
       console.error('unhandled ws msg: ' + msg);
     }
@@ -41,9 +41,10 @@ app.post('/msg', function (req, res) {
   console.log(req.body);
   res.send({ status: 'OK' })
   res.end("yes");
-
+  const msg = req.body;
+  store.saveMessage(msg);
   store.getConnections.forEach(c => {
-    c.websocket.send(JSON.stringify(req.body));
+    c.websocket.send(JSON.stringify(msg));
   });
 });
 
