@@ -10,12 +10,16 @@ class Input extends React.Component {
   render = () =>
     <div className={this.props.className}>
       <input
+        value={this.state.text} 
         onChange={(e) =>
           this.setState({ text: e.target.value })} />
       <button
-        onClick={() =>
-          this.props.onSubmit(this.state.text)}>
-        {this.props.buttonText}</button>
+        onClick={() => {
+          this.props.onSubmit(this.state.text);
+          this.setState({ text: '' });
+        }}>
+        {this.props.buttonText}
+      </button>
     </div>
 }
 

@@ -5,6 +5,7 @@ class Navigation extends React.Component {
         return <div className="nav">
             <p>TODO Add channel</p>
             <p>TODO Channel list</p>
+            <p>TODO User list</p>
         </div>;
     }
 }
