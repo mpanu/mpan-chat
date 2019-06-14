@@ -3,9 +3,11 @@ import React from 'react';
 class Navigation extends React.Component {
     render() {
         return <div className="nav">
-            <p>TODO Add channel</p>
-            <p>TODO Channel list</p>
-            <p>TODO User list</p>
+            <ul>
+                <li>TODO Add channel</li>
+                <li>TODO Channel list</li>
+                <li>TODO User list</li>
+            </ul>
         </div>;
     }
 }

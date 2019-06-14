@@ -1,6 +1,6 @@
 import React from 'react';
 import '../index.css';
-import Input from './Input';
+import InputDiv from './Input';
 import MessageList from './MessageList';
 import Navigation from './Navigation';
 import { postData } from '../utils.js';
@@ -17,7 +17,7 @@ class Root extends React.Component {
   render() {
     if (this.state.wsStatus === LOGIN_REQUIRED) {
       return (
-        <Input className="login"
+        <InputDiv className="login"
           buttonText='Login'
           onSubmit={this.doLogin} />
       );
@@ -28,7 +28,7 @@ class Root extends React.Component {
           <Navigation/>
           <div className="main">
             <MessageList messages={this.state.messages} />
-            <Input className="message"
+            <InputDiv className="message"
               buttonText='Send'
               onSubmit={this.sendMessage} />
           </div>

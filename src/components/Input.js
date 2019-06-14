@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {FormGroup, Label, Input} from 'reactstrap';
 
-class Input extends React.Component {
+class InputDiv extends React.Component {
   constructor(props) {
     super(props);
     this.state = { text: '' };
@@ -20,6 +21,10 @@ class Input extends React.Component {
         }}>
         {this.props.buttonText}
       </button>
+      <FormGroup>
+          <Label for="exampleText">Text Area</Label>
+          <Input type="textarea" name="text" id="exampleText" />
+        </FormGroup>
     </div>
 }
 
@@ -29,4 +34,4 @@ Input.propTypes = {
   buttonText: PropTypes.string
 };
 
-export default Input;
+export default InputDiv;
