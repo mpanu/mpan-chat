@@ -2,6 +2,7 @@ import React from 'react';
 import '../index.css';
 import Input from './Input';
 import MessageList from './MessageList';
+import Navigation from './Navigation';
 import { postData } from '../utils.js';
 
 const LOGIN_REQUIRED = 'login required';
@@ -24,10 +25,13 @@ class Root extends React.Component {
     else 
       return (
         <div>
-          <MessageList messages={this.state.messages} />
-          <Input className="message"
-            buttonText='Send'
-            onSubmit={this.sendMessage} />
+          <Navigation/>
+          <div className="main">
+            <MessageList messages={this.state.messages} />
+            <Input className="message"
+              buttonText='Send'
+              onSubmit={this.sendMessage} />
+          </div>
         </div>
     );
   }
